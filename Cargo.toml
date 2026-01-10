@@ -1,15 +1,3 @@
-[package]
-name = "rust_async_examples"
-version = "0.1.0"
-
-authors = ["MajorX234 <majorx234@googlemail.com>", "nikl174"]
-edition = "2021"
-resolver = "2"
-
-[[bin]]
-name = "file_watcher"
-path = "src/file_watcher/bin/main.rs"
-
-[dependencies]
-watchman_client = {version = "0.8.0"}
-tokio = { version = "1.21.2", features = ["full"] }
+[workspace]
+members = ["file_watcher"]
+resolver = "3"
