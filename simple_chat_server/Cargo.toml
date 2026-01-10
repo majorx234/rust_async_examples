@@ -10,5 +10,9 @@ resolver = "3"
 name = "simple_chat_server"
 path = "src/main.rs"
 
+[[bin]]
+name = "simple_chat_client"
+path = "src/client/main.rs"
+
 [dependencies]
 tokio = { version = "1.49.0", features = ["full"] }
