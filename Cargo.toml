@@ -1,3 +1,3 @@
 [workspace]
-members = ["file_watcher"]
+members = ["file_watcher", "simple_chat_server"]
 resolver = "3"

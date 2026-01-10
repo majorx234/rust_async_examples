@@ -1,0 +1,14 @@
+[package]
+name = "simple_chat_server"
+version = "0.1.0"
+
+authors = ["MajorX234 <majorx234@googlemail.com>", "nikl174"]
+edition = "2021"
+resolver = "3"
+
+[[bin]]
+name = "simple_chat_server"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { version = "1.49.0", features = ["full"] }
