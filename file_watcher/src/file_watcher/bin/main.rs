@@ -3,7 +3,7 @@ use watchman_client::prelude::*;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-  let mut client = Connector::new().connect().await?;
+  let client = Connector::new().connect().await?;
   let resolved = client
      .resolve_root(CanonicalPath::canonicalize(".")?)
      .await?;
