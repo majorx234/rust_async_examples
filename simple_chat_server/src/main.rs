@@ -7,7 +7,7 @@ use std::net::SocketAddr;
 #[tokio::main]
 async fn main() {
     let listener: TcpListener = TcpListener::bind("127.0.0.1:8080").await.expect("cannot bind  socket");
-    let (tx, mut rx) = broadcast::channel::<String>(50);
+    let (tx, _rx) = broadcast::channel::<String>(50);
     loop {
         let (mut socket, _addr): (TcpStream, SocketAddr) = listener.accept().await.expect("cannot establish incomming connection");
         let tx = tx.clone();
@@ -18,14 +18,19 @@ async fn main() {
 
             loop {
                 let mut line = String::new();
-                let bytes_read: usize = buf_reader.read_line(&mut line).await.expect("cannot read sock data");
-                if bytes_read == 0 {
-                    break;
+                tokio::select!{
+                    result = buf_reader.read_line(&mut line) => {
+                        if result.expect("cannot read sock data") == 0 {
+                            break;
+                        }
+                        let _ = tx.send(line);
+                    }
+                    new_msgs = rx.recv() => {
+                        let new_msgs = new_msgs.expect("error in boradcast channel");
+                        sock_writer.write_all(new_msgs.as_bytes()).await.expect("cannot write to sock data");
+                        //line.clear();
+                    }
                 }
-                tx.send(line);
-                let lines = rx.recv().await.expect("");
-                sock_writer.write_all(lines.as_bytes()).await.expect("cannot write on sock data");
-                //line.clear();
             }
         });
     }
