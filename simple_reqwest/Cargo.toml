@@ -1,0 +1,15 @@
+[package]
+name = "simple_reqwest"
+version = "0.1.0"
+
+authors = ["MajorX234 <majorx234@googlemail.com>", "nikl174"]
+edition = "2021"
+resolver = "3"
+
+[[bin]]
+name = "simple_reqwest"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { version = "1.49.0", features = ["full"] }
+reqwest = "0.13.1"
